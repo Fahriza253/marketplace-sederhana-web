@@ -4,7 +4,7 @@
 
 ```bash
 git clone https://github.com/Fahriza253/marketplace-sederhana-web.git
-cd nama-repository
+cd marketplace-sederhana-web
 ```
 
 ## Konfigurasi Environment
