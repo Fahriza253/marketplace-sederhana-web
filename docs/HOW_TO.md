@@ -65,6 +65,12 @@ Atau untuk production:
 npm run build
 ```
 
+Create storage link 
+
+```bash
+php artisan storage:link
+```
+
 ## Menjalankan Aplikasi
 
 ### Development Server

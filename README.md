@@ -6,14 +6,6 @@ Aplikasi ini menyediakan platform bagi pengguna untuk mencari dan melihat produk
 
 Selain itu, aplikasi ini juga ditujukan untuk mendukung kebutuhan penjual dalam mengelola produk yang mereka tawarkan. Secara fungsional, sistem ini berperan sebagai halaman manajemen (admin page) bagi penjual untuk melakukan pengelolaan data produk secara sederhana.
 
-## Tips Laravel Project
-
-Buat link storage, dan pastikan gambar ada untuk placeholder dummy data produk kita
-
-```
-php artisan storage:link
-```
-
 ## Todo List
 
 Lihat daftar tugas [di sini](docs/TODO.md)
