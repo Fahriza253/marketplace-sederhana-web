@@ -16,7 +16,7 @@
         <div>
             <h4 class="font-semibold mb-3">Company Info</h4>
             <ul class="space-y-2 text-white/80">
-                <li>About Us</li>
+                <li><a href="{{ route('about') }}">About Us</a></li>
                 <li>Carrier</li>
                 <li>We are hiring</li>
                 <li>Blog</li>

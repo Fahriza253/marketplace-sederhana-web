@@ -24,7 +24,7 @@ return new class extends Migration
         });
 
         Schema::create('vehicle_products', function (Blueprint $table) {
-            $table->foreignId('product_id')->constrained('products')->restrictOnDelete();
+            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->string('brand')->nullable();
             $table->string('model')->nullable();
             $table->year('year')->nullable();

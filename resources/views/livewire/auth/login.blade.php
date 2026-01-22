@@ -15,14 +15,16 @@
                 </div>
             @endif
 
-            <form {{-- wire:submit.prevent='login' --}}
-                method="POST" action="{{ route('login') }}">
+            <form  method="POST" action="{{ route('login') }}">
                 @csrf
-
                 <div> {{-- E M A I L --}}
                     <label class="text-gray-600 text-sm font-medium block">Email</label>
-                    <input type="email" name="email" {{-- wire:model.defer='email' --}} required 
-                         class="w-full mt-1 py-1 px-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition">
+                    <input type="email" name="email" required 
+                        class="w-full bg-transparent  placeholder:text-slate-400 text-slate-700
+                        border border-slate-200 rounded-md
+                        mt-1 py-2 px-3 
+                        focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow
+                        transition duration-300 ease">
                     @error('email')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
@@ -31,7 +33,11 @@
                 <div> {{-- P A S S W O R D --}}
                     <label class="text-gray-600 text-sm font-medium block">Masukan Kata Sandi</label>
                     <input type="password" name="password" {{-- wire:model.defer='password' --}} required  
-                        class="w-full mt-1 py-1 px-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition">
+                        class="w-full bg-transparent  placeholder:text-slate-400 text-slate-700
+                        border border-slate-200 rounded-md
+                        mt-1 py-2 px-3 
+                        focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow
+                        transition duration-300 ease">
                     @error('password')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror

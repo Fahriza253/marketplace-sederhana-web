@@ -16,10 +16,10 @@
   * [ ] Move 'create product shortcut to main navigation
 
 - [ ] Add prompt action confirmation
-- [ ] Add message after do some action
 - [ ] Fix search product result page
 - [ ] Fix login/register input 
 
 ## Other
 
 - [ ] Create landing page. 
+- [ ] Update product seeder image

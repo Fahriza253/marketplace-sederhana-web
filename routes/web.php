@@ -9,6 +9,7 @@ use App\Livewire\Pages\Home;
 use App\Livewire\Pages\Search;
 use App\Http\Controllers\Pages\HomeController;
 use App\Http\Controllers\ProductDetailController;
+use App\Livewire\Pages\About;
 
 /**
  * Public access
@@ -19,6 +20,7 @@ Route::get('/home', Home::class)->name('home');
 Route::get('/products/{product}', ProductDetailController::class)
     ->name('products.show');
 Route::get('/search', Search::class)->name('search');
+Route::get('/about', About::class)->name('about');
 
 /**
  * Manual implementation for authenticate

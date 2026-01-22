@@ -77,4 +77,11 @@ class Product extends Model
         ]);
     }
 
+    protected static function booted()
+    {
+        static::deleting(function ($product) {
+            $product->vehicle()->delete();
+            $product->images()->delete();
+        });
+    }
 }

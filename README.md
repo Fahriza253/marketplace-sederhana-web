@@ -13,5 +13,5 @@ Lihat daftar tugas [di sini](docs/TODO.md)
 ## Credits
 
 - [CLicon](https://www.figma.com/community/file/1271751279140741643)
-- [Bokker](https://www.figma.com/community/file/1141734879360095951)  
+- [Bokker](https://www.figma.com/community/file/1504184121948957967/rent-a-vehicle-booking-web-design)  
 - [MiraCars](https://www.figma.com/community/file/1559941251203168177)

@@ -20,42 +20,52 @@
                 @csrf
                 <div> {{-- F U L L  N A M E --}}
                     <label class="text-gray-600 text-sm font-medium block">Nama</label>
-                    <input name="name" type="text" required placeholder="Nama Lengkap" autofocus autocomplete="name" class="w-full mt-1 py-1 px-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition">
+                    <input name="name" type="text" required placeholder="Nama Lengkap" autofocus autocomplete="name" 
+                    class="w-full bg-transparent  placeholder:text-slate-400 text-slate-700
+                        border border-slate-200 rounded-md
+                        mt-1 py-2 px-3 
+                        focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow
+                        transition duration-300 ease">
                     @error('name')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
                 <div> {{-- ALAMAT EMAIL --}}
                     <label class="text-gray-600 text-sm font-medium block">Email</label>
-                    <input name="email" type="email" required placeholder="email@example.com" class="w-full mt-1 py-1 px-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition">
+                    <input name="email" type="email" required placeholder="email@example.com" 
+                        class="w-full bg-transparent  placeholder:text-slate-400 text-slate-700
+                        border border-slate-200 rounded-md
+                        mt-1 py-2 px-3 
+                        focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow
+                        transition duration-300 ease">
                     @error('email')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
                 <div> {{-- PASSWORD --}}
                     <label class="text-gray-600 text-sm font-medium block">Buat Kata Sandi</label>
-                    <input name="password" type="password" required placeholder="Buat kata sandi baru" class="w-full mt-1 py-1 px-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition">
+                    <input name="password" type="password" required placeholder="Buat kata sandi baru" 
+                    class="w-full bg-transparent  placeholder:text-slate-400 text-slate-700
+                        border border-slate-200 rounded-md
+                        mt-1 py-2 px-3 
+                        focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow
+                        transition duration-300 ease">
                     @error('password')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
                 <div> {{-- KONFIRMASI PASSWORD --}}
                     <label class="text-gray-600 text-sm font-medium block">Konfirmasi Kata Sandi</label>
-                    <input name="password_confirmation" type="password" required placeholder="Konfirmasi kata sandi" class="w-full mt-1 py-1 px-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition">
+                    <input name="password_confirmation" type="password" required placeholder="Konfirmasi kata sandi" 
+                        class="w-full bg-transparent  placeholder:text-slate-400 text-slate-700
+                        border border-slate-200 rounded-md
+                        mt-1 py-2 px-3 
+                        focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow
+                        transition duration-300 ease">
                     @error('password')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>            
-
-                {{-- OPTIONAL
-                <div>
-                    <label class="text-gray-600 text-sm font-medium block">Nomor Telepon</label>
-                    <input type="text" class="w-full mt-1 px-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition">
-                    @error('name')
-                        <span class="text-xs text-red-500">{{ $message }}</span>
-                    @enderror
-                </div>
-                --}}
 
                 <div class="flex items-start gap-2 text-sm mt-3">
                     <input type="checkbox" required
