@@ -84,13 +84,12 @@
                             <div class="flex gap-2">
                                 <a href="{{ route('products.edit', $product) }}"
                                    class="text-blue-600 hover:underline">
-                                    Edit
+                                    <i class="fa-solid fa-pen-to-square fa-xl"></i>
                                 </a>
-                                <button
-                                    wire:click="delete({{ $product->id }})"
+                                <button wire:click="delete({{ $product->id }})"
                                     wire:confirm="Yakin ingin menghapus produk ini?"
                                     class="text-red-600 hover:underline">
-                                    Hapus
+                                    <i class="fa-solid fa-trash fa-xl"></i>
                                 </button>
                             </div>
                         </td>

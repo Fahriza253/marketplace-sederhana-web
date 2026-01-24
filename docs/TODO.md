@@ -18,6 +18,7 @@
 - [ ] Add prompt action confirmation
 - [ ] Fix search product result page
 - [ ] Fix login/register input 
+- [ ] Add more icon
 
 ## Other
 

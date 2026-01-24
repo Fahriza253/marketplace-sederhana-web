@@ -7,7 +7,7 @@
     <form wire:submit.prevent="save"
           class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-        {{-- ================= LEFT : MAIN FORM ================= --}}
+        {{-- LEFT : MAIN FORM --}}
         <div class="md:col-span-2 space-y-5">
 
             {{-- Nama Produk --}}
@@ -76,7 +76,7 @@
                         focus:border-gray-400 transition-colors"></textarea>
             </div>
 
-            {{-- ================= VEHICLE INFO ================= --}}
+            {{-- VEHICLE INFO --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 <div>
@@ -114,7 +114,7 @@
             </div>
         </div>
 
-        {{-- ================= RIGHT : IMAGES ================= --}}
+        {{-- RIGHT : IMAGES --}}
         <div class="space-y-5">
 
             {{-- Images Preview (Old + New) --}}

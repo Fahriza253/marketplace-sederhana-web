@@ -3,7 +3,7 @@
     <div class="bg-primary text-white">
         <div class="max-w-7xl mx-auto px-4 py-4 flex items-center w-full">
             <div class="flex items-center gap-2 font-bold text-xl shrink-0" style="width:30%"> {{-- Brand Identity --}}
-                <a href="{{ route('home') }}" class="font-bold text-2xl">DRIVEHUB</a>
+                <a href="{{ route('home') }}" class="font-bold text-2xl">{{ config('app.name') }}</a>
             </div>
 
             <div class="flex justify-center" style="width:40%">
@@ -25,7 +25,12 @@
                 @endguest
 
                 @auth
-                <div x-data="{ open: false }" class="relative">
+                <div x-data="{ open: false }" class="relative flex gap-5">
+                    <button class="bg-white/20 rounded-full w-10 h-10 hover:bg-white/30 transition focus:outline-none">
+                        <a href="{{ route('products.create') }}">
+                            <i class="fa-solid fa-plus fa-lg text-white">{{-- Add New Product Button --}}</i>
+                        </a>
+                    </button>
                     <button
                         @click="open = !open"
                         @click.outside="open = false"

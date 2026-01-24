@@ -12,6 +12,11 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Models\VehicleProduct;
 
+/**
+ * TODO:
+ * Fix data product
+ */
+
 class Create extends Component
 {
     use WithFileUploads;
@@ -20,6 +25,7 @@ class Create extends Component
     public string $description = '';
     public float  $price;
     public int    $stock     = 1;
+    // TODO: Set manually
     public string $condition = 'used';
     public int    $category_id;
 
