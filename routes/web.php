@@ -11,6 +11,12 @@ use App\Http\Controllers\Pages\HomeController;
 use App\Http\Controllers\ProductDetailController;
 use App\Livewire\Pages\About;
 
+use App\Livewire\Page\Blog;
+use App\Livewire\Page\Carrier;
+
+Route::get('/blog', Blog::class)->name('blog');
+Route::get('/carrier', Carrier::class)->name('carrier');
+
 /**
  * Public access
  */

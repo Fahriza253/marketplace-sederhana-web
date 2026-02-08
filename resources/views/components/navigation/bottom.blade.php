@@ -17,9 +17,9 @@
             <h4 class="font-semibold mb-3">Company Info</h4>
             <ul class="space-y-2 text-white/80">
                 <li><a href="{{ route('about') }}">About Us</a></li>
-                <li>Carrier</li>
+                <li><a href="{{ route('carrier') }}">Carrier</a></li>
                 <li>We are hiring</li>
-                <li>Blog</li>
+                <li> <a href="{{ route('blog') }}">Blog</a> </li>
             </ul>
         </div>
 

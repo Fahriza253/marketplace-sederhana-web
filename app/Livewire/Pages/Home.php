@@ -22,7 +22,7 @@ class Home extends Component
                 ->basicRelations()
                 ->where('stock', '>', 0)
                 ->latest()
-                ->paginate(30),
+                ->paginate(100),
         ]);
     }
 }
