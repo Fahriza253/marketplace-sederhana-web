@@ -17,14 +17,14 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price', 15, 2);
             $table->unsignedInteger('stock')->default(0);
-            $table->enum('status', ['available', 'unavailable'])->default('available');
+            $table->enum('status', ['available', 'unavailable', 'sold'])->default('available');
             $table->enum('condition', ['new', 'used'])->default('new');
             $table->timestamp('sold_at')->nullable();
             $table->timestamps();
         });
 
         Schema::create('vehicle_products', function (Blueprint $table) {
-            $table->foreignId('product_id')->constrained('products')->restrictOnDelete();
+            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->string('brand')->nullable();
             $table->string('model')->nullable();
             $table->year('year')->nullable();
@@ -39,17 +39,23 @@ return new class extends Migration
             $table->boolean('is_primary')->default(false);
         });
 
-        DB::statement("
-            CREATE UNIQUE INDEX images_primary_unique
-            ON images (product_id) 
-            WHERE is_primary = true
-        ");
+        if (DB::getDriverName() === 'pgsql') {
+            DB::statement("
+                CREATE UNIQUE INDEX images_primary_unique
+                ON images (product_id)
+                WHERE is_primary = true
+            ");
+        }
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('products');
-        Schema::dropIfExists('vehicle_products');
+        if (DB::getDriverName() === 'pgsql') {
+            DB::statement('DROP INDEX IF EXISTS images_primary_unique');
+        }
+
         Schema::dropIfExists('images');
+        Schema::dropIfExists('vehicle_products');
+        Schema::dropIfExists('products');
     }
 };

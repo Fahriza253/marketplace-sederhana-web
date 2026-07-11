@@ -14,21 +14,20 @@
             <select wire:model.defer="status"
                 class="px-3 py-2 text-sm rounded-lg border focus:ring focus:ring-blue-200">
                 <option value="">Semua Status</option>
-                <option value="available">Aktif</option>
-                <option value="inactive">Nonaktif</option>
+                <option value="available">Tersedia</option>
+                <option value="unavailable">Tidak tersedia</option>
                 <option value="sold">Terjual</option>
             </select>
 
             <select wire:model.defer="category"
                 class="px-3 py-2 text-sm rounded-lg border focus:ring focus:ring-blue-200">
                 <option value="">Semua Kategori</option>
-                @foreach(\App\Models\Category::select('id','name')->get() as $cat)
+                @foreach(\App\Models\Category::select('id', 'name')->get() as $cat)
                     <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                 @endforeach
             </select>
 
-            <select wire:model.defer="sort"
-                class="px-3 py-2 text-sm rounded-lg border focus:ring focus:ring-blue-200">
+            <select wire:model.defer="sort" class="px-3 py-2 text-sm rounded-lg border focus:ring focus:ring-blue-200">
                 <option value="latest">Terbaru</option>
                 <option value="oldest">Terlama</option>
             </select>
@@ -55,46 +54,49 @@
 
             <tbody>
                 @forelse ($products as $product)
-                    <tr class="border-b hover:bg-gray-50 align-middle">
-                        <td class="py-4">
-                            <div class="flex items-center gap-3">
-                                <img class="w-12 h-12 rounded object-cover"
-                                    src="{{ $product->primaryImage ? asset('storage/' . $product->primaryImage->image_url)
-                                        : asset('img/placeholder-car.png')}}">
-                                <span class="font-medium">{{ $product->name }}</span>
-                            </div>
-                        </td>
+                                <tr class="border-b hover:bg-gray-50 align-middle">
+                                    <td class="py-4">
+                                        <div class="flex items-center gap-3">
+                                            <img class="w-12 h-12 rounded object-cover" src="{{ $product->primaryImage ? asset('storage/' . $product->primaryImage->image_url)
+                        : asset('img/placeholder-car.png')}}">
+                                            <span class="font-medium">{{ $product->name }}</span>
+                                        </div>
+                                    </td>
 
-                        <td class="py-4">{{ $product->category->name ?? '-' }}</td>
+                                    <td class="py-4">{{ $product->category->name ?? '-' }}</td>
 
-                        <td class="py-4">
-                            Rp {{ number_format($product->price, 0, ',', '.') }}
-                        </td>
+                                    <td class="py-4">
+                                        Rp {{ number_format($product->price, 0, ',', '.') }}
+                                    </td>
 
-                        <td class="py-4">
-                            <span class="px-2 py-1 rounded text-xs
-                                {{ $product->status === 'available'
-                                    ? 'bg-green-100 text-green-700'
-                                    : 'bg-gray-100 text-gray-600' }}">
-                                {{ ucfirst($product->status) }}
-                            </span>
-                        </td>
+                                    <td class="py-4">
+                                        <span @class([
+                                            'px-2 py-1 rounded text-xs',
+                                            'bg-green-100 text-green-700' => $product->status === 'available',
+                                            'bg-amber-100 text-amber-700' => $product->status === 'unavailable',
+                                            'bg-gray-100 text-gray-600' => $product->status === 'sold',
+                                        ])>
+                                            {{ match ($product->status) {
+                        'available' => 'Tersedia',
+                        'unavailable' => 'Tidak tersedia',
+                        'sold' => 'Terjual',
+                        default => ucfirst($product->status),
+                    } }}
+                                        </span>
+                                    </td>
 
-                        <td class="py-4">
-                            <div class="flex gap-2">
-                                <a href="{{ route('products.edit', $product) }}"
-                                   class="text-blue-600 hover:underline">
-                                    Edit
-                                </a>
-                                <button
-                                    wire:click="delete({{ $product->id }})"
-                                    wire:confirm="Yakin ingin menghapus produk ini?"
-                                    class="text-red-600 hover:underline">
-                                    Hapus
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                                    <td class="py-4">
+                                        <div class="flex gap-2">
+                                            <a href="{{ route('products.edit', $product) }}" class="text-blue-600 hover:underline">
+                                                <i class="fa-solid fa-pen-to-square fa-xl"></i>
+                                            </a>
+                                            <button wire:click="delete({{ $product->id }})"
+                                                wire:confirm="Yakin ingin menghapus produk ini?" class="text-red-600 hover:underline">
+                                                <i class="fa-solid fa-trash fa-xl"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
                 @empty
                     <tr>
                         <td colspan="5" class="py-6 text-center text-gray-500">
@@ -111,10 +113,8 @@
         @foreach ($products as $product)
             <div class="border rounded-lg p-4 shadow-sm">
                 <div class="flex items-center gap-3">
-                    <img
-                        src="{{ $product->primaryImage?->image_url ?? '/placeholder.png' }}"
-                        class="w-14 h-14 rounded object-cover"
-                    >
+                    <img src="{{ $product->primaryImage?->image_url ?? '/placeholder.png' }}"
+                        class="w-14 h-14 rounded object-cover">
                     <div>
                         <h3 class="font-semibold text-sm">{{ $product->name }}</h3>
                         <p class="text-xs text-gray-500">
@@ -124,12 +124,14 @@
                 </div>
 
                 <div class="flex justify-between mt-3 text-sm">
-                    <a href="#redirectToFormEdit"
-                       class="text-blue-600">
+                    <a href="{{ route('products.edit', $product) }}"
+                        class="text-primary hover:underline inline-flex items-center gap-1">
+                        <i class="fa-solid fa-pen-to-square"></i>
                         Edit
                     </a>
-                    <button wire:click="delete({{ $product->id }})"
-                        class="text-red-600">
+                    <button wire:click="delete({{ $product->id }})" wire:confirm="Yakin ingin menghapus produk ini?"
+                        class="text-red-600 inline-flex items-center gap-1">
+                        <i class="fa-solid fa-trash"></i>
                         Hapus
                     </button>
                 </div>

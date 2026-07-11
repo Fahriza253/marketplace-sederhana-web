@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
+use App\Models\Role;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -25,12 +26,16 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'name'     => ['required', 'string', 'max:100'],
-            'email'    => ['required', 'email', 'max:150', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'name'         => ['required', 'string', 'max:100'],
+            'email'        => ['required', 'email', 'max:150', 'unique:users,email'],
+            'phone_number' => ['nullable', 'string', 'max:20'],
+            'password'     => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
         $user = User::create($validated);
+
+        $consumentRole = Role::firstOrCreate(['name' => 'consument']);
+        $user->roles()->syncWithoutDetaching([$consumentRole->id]);
 
         Auth::login($user);
         $request->session()->regenerate();

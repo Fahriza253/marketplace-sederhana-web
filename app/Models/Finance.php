@@ -12,6 +12,8 @@ class Finance extends Model
 
     protected $primaryKey = 'finance_id';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'transaction_id',
         'type',

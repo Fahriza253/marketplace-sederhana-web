@@ -1,65 +1,66 @@
 <x-layouts.auth>
-    <div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-        <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 transition hover:shadow-2xl">
+    <div class="min-h-screen flex items-center justify-center bg-surface px-4">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
 
             <div class="text-center mb-6">
-                <h2 class="text-gray-800 text-2xl font-bold">Masuk Akun</h2>
-                <p class="text-gray-600 text-sm">Masuk untuk melanjutkan</p>
+                <a href="{{ route('landing') }}" class="font-display text-2xl font-bold text-primary">
+                    {{ config('app.name') }}
+                </a>
+                <h2 class="text-ink text-xl font-semibold mt-3">Masuk Akun</h2>
+                <p class="text-slate-600 text-sm">Masuk untuk melanjutkan</p>
             </div>
 
-            <x-auth-session-status class="text-center" :status="session('status')"/>
-            
-            @if (session()->has('success'))
-                <div class="text-green-600 text-sm mb-4">
-                    {{ session('success') }}
-                </div>
-            @endif
+            <x-auth-session-status class="text-center" :status="session('status')" />
 
-            <form {{-- wire:submit.prevent='login' --}}
-                method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('login') }}" class="space-y-4">
                 @csrf
-
-                <div> {{-- E M A I L --}}
-                    <label class="text-gray-600 text-sm font-medium block">Email</label>
-                    <input type="email" name="email" {{-- wire:model.defer='email' --}} required 
-                         class="w-full mt-1 py-1 px-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition">
+                <div>
+                    <label class="text-slate-600 text-sm font-medium block" for="email">Email</label>
+                    <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
+                        class="w-full placeholder:text-slate-400 text-slate-700 border border-slate-200 rounded-md mt-1 py-2 px-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 shadow-sm transition">
                     @error('email')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
 
-                <div> {{-- P A S S W O R D --}}
-                    <label class="text-gray-600 text-sm font-medium block">Masukan Kata Sandi</label>
-                    <input type="password" name="password" {{-- wire:model.defer='password' --}} required  
-                        class="w-full mt-1 py-1 px-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition">
+                <div>
+                    <label class="text-slate-600 text-sm font-medium block" for="password">Kata Sandi</label>
+                    <input id="password" type="password" name="password" required
+                        class="w-full placeholder:text-slate-400 text-slate-700 border border-slate-200 rounded-md mt-1 py-2 px-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 shadow-sm transition">
                     @error('password')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
-                </div>     
+                </div>
+
+                <label class="flex items-center gap-2 text-sm text-slate-600">
+                    <input type="checkbox" name="remember" value="1"
+                        class="rounded border-slate-300 text-primary focus:ring-primary">
+                    Ingat saya
+                </label>
 
                 <button type="submit"
-                    class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg transition duration-200 mt-3">
-                    MASUK
+                    class="w-full bg-accent hover:brightness-95 text-ink font-semibold py-2.5 rounded-lg transition mt-1">
+                    Masuk
                 </button>
             </form>
 
             <div class="flex items-center my-6">
-                <hr class="flex-grow border-gray-300">
-                <span class="mx-2 text-xs text-gray-600"> Atau </span>
-                <hr class="flex-grow border-gray-300">
+                <hr class="flex-grow border-slate-200">
+                <span class="mx-2 text-xs text-slate-500">atau</span>
+                <hr class="flex-grow border-slate-200">
             </div>
 
-            <div class="space-y-3">
-                <button
-                    class="w-full flex items-center justify-center gap-2 border rounded-lg py-2 hover:bg-gray-100 transition">
-                    {{-- TODO: Tambahkan icon --}}
-                    <span class="text-sm font-medium"><a href="{{ route('home') }}">Lanjutkan tanpa akun</a></span>
-                </button>
-                <span class="text-sm font-medium">{{ ('Belum memiliki akun?') }}</span>
-                <a href="{{ route('register') }}" class="text-sm font-medium text-blue-500"
-                    wire:navigate>{{ ('Buat') }}</a>
+            <div class="space-y-3 text-center">
+                <a href="{{ route('home') }}"
+                    class="w-full flex items-center justify-center gap-2 border border-slate-200 rounded-lg py-2 hover:bg-slate-50 transition text-sm font-medium">
+                    <i class="fa-solid fa-car"></i>
+                    Lanjutkan tanpa akun
+                </a>
+                <p class="text-sm text-slate-600">
+                    Belum punya akun?
+                    <a href="{{ route('register') }}" class="font-medium text-primary hover:underline">Daftar</a>
+                </p>
             </div>
-
         </div>
     </div>
 </x-layouts.auth>

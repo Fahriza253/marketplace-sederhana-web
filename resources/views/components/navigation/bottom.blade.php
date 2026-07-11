@@ -1,25 +1,25 @@
 <!-- ===== FOOTER (STICKY BOTTOM) ===== -->
 <footer class="bg-primary text-white">
-    <div class="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-4 gap-8 text-sm">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-3 gap-8 text-sm">
         <div>
-            <h4 class="font-semibold mb-3">Get In Touch</h4>
+            <h4 class="font-semibold mb-3">{{ config('app.name') }}</h4>
             <p class="text-white/80 mb-4">
-                the quick fox jumps over the lazy dog
+                Slogan goes here...
             </p>
             <div class="flex gap-3">
-                <span class="hover:text-gray-300 cursor-pointer">FB</span>
-                <span class="hover:text-gray-300 cursor-pointer">IG</span>
-                <span class="hover:text-gray-300 cursor-pointer">TW</span>
+                <span class="hover:text-gray-300 cursor-pointer"><i class="fa-brands fa-instagram"></i></span>
+                <span class="hover:text-gray-300 cursor-pointer"><i class="fa-brands fa-whatsapp"></i></span>
+                <span class="hover:text-gray-300 cursor-pointer"><i class="fa-brands fa-tiktok"></i></span>
             </div>
         </div>
 
         <div>
             <h4 class="font-semibold mb-3">Company Info</h4>
             <ul class="space-y-2 text-white/80">
-                <li>About Us</li>
-                <li>Carrier</li>
+                <li><a href="{{ route('about') }}">About Us</a></li>
+                <li><a href="{{ route('carrier') }}">Carrier</a></li>
                 <li>We are hiring</li>
-                <li>Blog</li>
+                <li> <a href="{{ route('blog') }}">Blog</a> </li>
             </ul>
         </div>
 
@@ -30,16 +30,6 @@
                 <li>User Analytic</li>
                 <li>Live Chat</li>
                 <li>Unlimited Support</li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 class="font-semibold mb-3">Resources</h4>
-            <ul class="space-y-2 text-white/80">
-                <li>IOS & Android</li>
-                <li>Watch a Demo</li>
-                <li>Customers</li>
-                <li>API</li>
             </ul>
         </div>
     </div>

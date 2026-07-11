@@ -1,0 +1,81 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: drivehub_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - drivehub
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: drivehub_nginx
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8000}:80"
+    volumes:
+      - .:/var/www:ro
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+    networks:
+      - drivehub
+
+  db:
+    image: postgres:16-alpine
+    container_name: drivehub_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-drivehub_db}
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "${DB_PUBLISH_PORT:-5432}:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_DATABASE:-drivehub_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - drivehub
+
+  node:
+    image: node:22-alpine
+    container_name: drivehub_node
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    ports:
+      - "${VITE_PORT:-5173}:5173"
+    environment:
+      VITE_HMR_HOST: localhost
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
+    depends_on:
+      - app
+    networks:
+      - drivehub
+    profiles:
+      - frontend
+
+networks:
+  drivehub:
+    driver: bridge
+
+volumes:
+  pg_data:

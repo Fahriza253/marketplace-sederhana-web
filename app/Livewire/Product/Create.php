@@ -18,14 +18,14 @@ class Create extends Component
 
     public string $name        = '';
     public string $description = '';
-    public float  $price;
-    public int    $stock     = 1;
-    public string $condition = 'used';
-    public int    $category_id;
+    public float  $price       = 0;
+    public int    $stock       = 1;
+    public string $condition   = 'used';
+    public int    $category_id = 0;
 
     public string $brand = '';
     public string $model = '';
-    public int    $year;
+    public int    $year = 2020;
     public string $engine_capacity = '';
     public string $license_plate = '';
 
@@ -44,8 +44,9 @@ class Create extends Component
 
             'brand' => 'required',
             'model' => 'required',
-            'year' => 'required|integer',
+            'year' => 'required|integer|min:1990',
             'engine_capacity' => 'required',
+            'license_plate' => 'nullable|string|max:20',
 
             'images'   => 'required|array|min:1|max:5',
             'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -99,15 +100,14 @@ class Create extends Component
             ]);
 
             $product->vehicle()->create([
-                'brand' => $this->brand,
-                'model' => $this->model,
-                'year' => $this->year,
+                'brand'           => $this->brand,
+                'model'           => $this->model,
+                'year'            => $this->year,
                 'engine_capacity' => $this->engine_capacity,
-                // 'license_plate' => $this->license_plate,
+                'license_plate'   => $this->license_plate ?: null,
             ]);
 
             foreach ($this->images as $index => $image) {
-                // Pastikan nama file unik
                 $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
                 $path = $image->storeAs(
                     'products/' . $product->id,
@@ -124,7 +124,7 @@ class Create extends Component
 
         session()->flash('success', 'Produk berhasil ditambahkan');
 
-        return redirect()->route('home');
+        return redirect()->route('products.index');
     }
 
     public function render()
