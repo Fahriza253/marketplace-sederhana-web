@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Cache\HasCacheLock;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\{
@@ -35,7 +34,7 @@ class Transaction extends Model
 
     public function items(): HasMany
     {
-        return $this->hasMany(TransactionItem::class); 
+        return $this->hasMany(TransactionItem::class);
     }
 
     public function finance(): HasOne

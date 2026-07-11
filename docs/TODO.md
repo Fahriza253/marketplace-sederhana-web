@@ -1,26 +1,31 @@
-# Todo List
+# Todo List — DriveHub Roadmap
 
-## Core Function
+Roadmap pengembangan berdasarkan audit codebase. DriveHub adalah **listing platform** (pembayaran di luar sistem). **Finance** = pelacakan lead/inquiry (WhatsApp), bukan payment gateway.
+
+## Done
 
 - [x] Logout function
-- [ ] Finance management feature
-
-## UI&UX Improvement
-
 - [x] Fix breadcrumbs
- * [ ] Fix multi-user based access
 
-- [ ] Fix admin/seller view, add dashboard page.
-- [ ] Change primary color
-- [ ] Fix navbar
-  * [ ] Move 'create product shortcut to main navigation
+## Fase 1 — Stabilisasi (P0)
 
-- [ ] Add prompt action confirmation
-- [ ] Fix search product result page
-- [ ] Fix login/register input 
-- [ ] Add more icon
+- [x] Fix RBAC (`hasRole`, register role, seed seller, gate create)
+- [x] Align product status enum (`available` | `unavailable` | `sold`)
+- [x] Fix dashboard route prefix
+- [x] Persist vehicle fields + redirect create
 
-## Other
+## Fase 2 — UI/UX
 
-- [ ] Create landing page. 
-- [ ] Update product seeder image
+- [x] Navbar + create shortcut + icons
+- [x] Action confirmations
+- [x] Login/register polish + phone
+- [x] Search filters + empty state
+- [x] Landing DriveHub
+- [x] Primary color tokens
+- [x] Seeder images
+
+## Fase 3 — Dashboard & Finance
+
+- [x] Seller/admin dashboard overview
+- [x] Finance = WhatsApp lead tracking + seller phone CTA
+- [x] Minimal feature tests

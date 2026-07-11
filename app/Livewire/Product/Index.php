@@ -31,11 +31,8 @@ class Index extends Component
     {
         $product = Product::findOrFail($id);
 
-        // Authorization (simple & extendable)
-        if (
-            auth()->user()->role === 'seller' &&
-            $product->user_id !== auth()->id()
-        ) {
+        $user = auth()->user();
+        if ($user->hasRole('seller') && ! $user->hasRole('admin') && $product->user_id !== $user->id) {
             abort(403);
         }
 
@@ -50,8 +47,7 @@ class Index extends Component
             ->basicRelations()
             ->with('category:id,name');
 
-        // Role-based filtering
-        if ($user->role === 'seller') {
+        if ($user->hasRole('seller') && ! $user->hasRole('admin')) {
             $query->where('user_id', $user->id);
         }
 

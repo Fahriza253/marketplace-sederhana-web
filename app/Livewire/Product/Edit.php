@@ -31,7 +31,8 @@ class Edit extends Component
     public string $brand;
     public string $model;
     public int    $year;
-    public string $engine_capacity;
+    public string $engine_capacity = '';
+    public string $license_plate = '';
 
     // Images
     public array $newImages = [];
@@ -44,7 +45,8 @@ class Edit extends Component
 
     public function mount(Product $product)
     {
-        if (Auth::user()->role === 'seller' && $product->user_id !== Auth::id()) {
+        $user = Auth::user();
+        if ($user->hasRole('seller') && ! $user->hasRole('admin') && $product->user_id !== Auth::id()) {
             abort(403);
         }
 
@@ -62,9 +64,11 @@ class Edit extends Component
         ]);
 
         if ($product->vehicle) {
-            $this->fill($product->vehicle->only([
-                'brand', 'model', 'year', 'engine_capacity'
-            ]));
+            $this->brand = (string) ($product->vehicle->brand ?? '');
+            $this->model = (string) ($product->vehicle->model ?? '');
+            $this->year = (int) ($product->vehicle->year ?? now()->year);
+            $this->engine_capacity = (string) ($product->vehicle->engine_capacity ?? '');
+            $this->license_plate = (string) ($product->vehicle->license_plate ?? '');
         }
 
         if ($product->primaryImage) {
@@ -81,13 +85,15 @@ class Edit extends Component
             'name' => 'required|min:5',
             'price' => 'required|numeric|min:1000',
             'stock' => 'required|integer|min:0',
-            'status' => 'required|in:available,sold,draft',
+            'status' => 'required|in:available,unavailable,sold',
+            'condition' => 'required|in:new,used',
             'category_id' => 'required|exists:categories,id',
 
             'brand' => 'required',
             'model' => 'required',
             'year' => 'required|integer|min:1990',
             'engine_capacity' => 'required',
+            'license_plate' => 'nullable|string|max:20',
 
             'newImages.*' => 'image|max:2048',
         ];
@@ -132,7 +138,6 @@ class Edit extends Component
 
     DB::transaction(function () {
 
-        /* ================= PRODUCT ================= */
         $this->product->update([
             'name'        => $this->name,
             'description' => $this->description,
@@ -141,6 +146,7 @@ class Edit extends Component
             'status'      => $this->status,
             'condition'   => $this->condition,
             'category_id' => $this->category_id,
+            'sold_at'     => $this->status === 'sold' ? ($this->product->sold_at ?? now()) : null,
         ]);
 
         VehicleProduct::updateOrCreate(
@@ -150,6 +156,7 @@ class Edit extends Component
                 'model'           => $this->model,
                 'year'            => $this->year,
                 'engine_capacity' => $this->engine_capacity,
+                'license_plate'   => $this->license_plate ?: null,
             ]
         );
 

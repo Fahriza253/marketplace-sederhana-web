@@ -44,9 +44,11 @@ Route::middleware('guest')->group( function () {
 Route::middleware('auth')->group( function () {
     Route::post('/logout',    [AuthController::class, 'logout'])->name('logout');
 
-    Route::middleware('role:admin,seller')->prefix('dashboard')->group( function () {
-        Route::get('/dashboard/products/create', Create::class)->name('products.create');
-        Route::get('/dashboard/products', Index::class)->name('products.index');
-        Route::get('/dashboard/products/{product}/edit', Edit::class)->name('products.edit');
+    Route::middleware('role:admin,seller')->prefix('dashboard')->group(function () {
+        Route::get('/', \App\Livewire\Dashboard\Overview::class)->name('dashboard');
+        Route::get('/products', Index::class)->name('products.index');
+        Route::get('/products/create', Create::class)->name('products.create');
+        Route::get('/products/{product}/edit', Edit::class)->name('products.edit');
+        Route::get('/finance', \App\Livewire\Dashboard\Finance::class)->name('dashboard.finance');
     });
 });

@@ -1,104 +1,97 @@
 <x-layouts.auth>
-    <div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-        <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 transition hover:shadow-2xl">
+    <div class="min-h-screen flex items-center justify-center bg-surface px-4 py-10">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
 
-            {{-- Header --}}
             <div class="text-center mb-6">
-                <h2 class="text-gray-800 text-2xl font-bold">Daftar Akun</h2>
-                <p class="text-gray-600 text-sm">Buat akun baru untuk melanjutkan</p>
+                <a href="{{ route('landing') }}" class="font-display text-2xl font-bold text-primary">
+                    {{ config('app.name') }}
+                </a>
+                <h2 class="text-ink text-xl font-semibold mt-3">Daftar Akun</h2>
+                <p class="text-slate-600 text-sm">Buat akun untuk mulai menjelajah</p>
             </div>
 
-            <x-auth-session-status class="text-center" :status="session('status')"/>
+            <x-auth-session-status class="text-center" :status="session('status')" />
 
-            @if (session()->has('success'))
-                <div class="text-green-600 text-sm mb-4">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('register') }}" class="space-y-4">
                 @csrf
-                <div> {{-- F U L L  N A M E --}}
-                    <label class="text-gray-600 text-sm font-medium block">Nama</label>
-                    <input name="name" type="text" required placeholder="Nama Lengkap" autofocus autocomplete="name" 
-                    class="w-full bg-transparent  placeholder:text-slate-400 text-slate-700
-                        border border-slate-200 rounded-md
-                        mt-1 py-2 px-3 
-                        focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow
-                        transition duration-300 ease">
+                <div>
+                    <label class="text-slate-600 text-sm font-medium block" for="name">Nama</label>
+                    <input id="name" name="name" type="text" value="{{ old('name') }}" required
+                        placeholder="Nama lengkap" autofocus autocomplete="name"
+                        class="w-full placeholder:text-slate-400 text-slate-700 border border-slate-200 rounded-md mt-1 py-2 px-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 shadow-sm transition">
                     @error('name')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
-                <div> {{-- ALAMAT EMAIL --}}
-                    <label class="text-gray-600 text-sm font-medium block">Email</label>
-                    <input name="email" type="email" required placeholder="email@example.com" 
-                        class="w-full bg-transparent  placeholder:text-slate-400 text-slate-700
-                        border border-slate-200 rounded-md
-                        mt-1 py-2 px-3 
-                        focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow
-                        transition duration-300 ease">
+
+                <div>
+                    <label class="text-slate-600 text-sm font-medium block" for="email">Email</label>
+                    <input id="email" name="email" type="email" value="{{ old('email') }}" required
+                        placeholder="email@example.com" autocomplete="email"
+                        class="w-full placeholder:text-slate-400 text-slate-700 border border-slate-200 rounded-md mt-1 py-2 px-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 shadow-sm transition">
                     @error('email')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
-                <div> {{-- PASSWORD --}}
-                    <label class="text-gray-600 text-sm font-medium block">Buat Kata Sandi</label>
-                    <input name="password" type="password" required placeholder="Buat kata sandi baru" 
-                    class="w-full bg-transparent  placeholder:text-slate-400 text-slate-700
-                        border border-slate-200 rounded-md
-                        mt-1 py-2 px-3 
-                        focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow
-                        transition duration-300 ease">
+
+                <div>
+                    <label class="text-slate-600 text-sm font-medium block" for="phone_number">Nomor WhatsApp</label>
+                    <input id="phone_number" name="phone_number" type="tel" value="{{ old('phone_number') }}"
+                        placeholder="08xxxxxxxxxx" autocomplete="tel"
+                        class="w-full placeholder:text-slate-400 text-slate-700 border border-slate-200 rounded-md mt-1 py-2 px-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 shadow-sm transition">
+                    @error('phone_number')
+                        <span class="text-xs text-red-500">{{ $message }}</span>
+                    @enderror
+                    <p class="text-xs text-slate-500 mt-1">Digunakan jika Anda menjadi penjual</p>
+                </div>
+
+                <div>
+                    <label class="text-slate-600 text-sm font-medium block" for="password">Kata Sandi</label>
+                    <input id="password" name="password" type="password" required placeholder="Minimal 8 karakter"
+                        autocomplete="new-password"
+                        class="w-full placeholder:text-slate-400 text-slate-700 border border-slate-200 rounded-md mt-1 py-2 px-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 shadow-sm transition">
                     @error('password')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
-                <div> {{-- KONFIRMASI PASSWORD --}}
-                    <label class="text-gray-600 text-sm font-medium block">Konfirmasi Kata Sandi</label>
-                    <input name="password_confirmation" type="password" required placeholder="Konfirmasi kata sandi" 
-                        class="w-full bg-transparent  placeholder:text-slate-400 text-slate-700
-                        border border-slate-200 rounded-md
-                        mt-1 py-2 px-3 
-                        focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow
-                        transition duration-300 ease">
-                    @error('password')
-                        <span class="text-xs text-red-500">{{ $message }}</span>
-                    @enderror
-                </div>            
 
-                <div class="flex items-start gap-2 text-sm mt-3">
+                <div>
+                    <label class="text-slate-600 text-sm font-medium block" for="password_confirmation">Konfirmasi Kata
+                        Sandi</label>
+                    <input id="password_confirmation" name="password_confirmation" type="password" required
+                        placeholder="Ulangi kata sandi" autocomplete="new-password"
+                        class="w-full placeholder:text-slate-400 text-slate-700 border border-slate-200 rounded-md mt-1 py-2 px-3 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 shadow-sm transition">
+                </div>
+
+                <label class="flex items-start gap-2 text-sm text-slate-600">
                     <input type="checkbox" required
-                        class="mt-1 text-orange-600 border-gray-300 rounded focus:ring-orange-400"> 
-                    <p
-                        class="text-gray-600">
-                        Saya setuju dengan <a href="#" class="text-blue-500 hover:underline">Terms & Conditions</a> dan <a class="text-blue-500 hover:underline" href="#">Privacy Policy</a>
-                    </p>
-                </div>
+                        class="mt-1 rounded border-slate-300 text-primary focus:ring-primary">
+                    <span>Saya setuju menggunakan DriveHub sebagai platform listing (transaksi di luar sistem).</span>
+                </label>
 
-                <button type="submit" variant="primary"
-                    class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg transition duration-200 mt-3">
-                    DAFTAR
+                <button type="submit"
+                    class="w-full bg-accent hover:brightness-95 text-ink font-semibold py-2.5 rounded-lg transition">
+                    Daftar
                 </button>
             </form>
 
             <div class="flex items-center my-6">
-                <hr class="flex-grow border-gray-300">
-                <span class="mx-2 text-xs text-gray-600"> Atau </span>
-                <hr class="flex-grow border-gray-300">
+                <hr class="flex-grow border-slate-200">
+                <span class="mx-2 text-xs text-slate-500">atau</span>
+                <hr class="flex-grow border-slate-200">
             </div>
 
-            <div class="space-y-3">
-                <button
-                    class="w-full flex items-center justify-center gap-2 border rounded-lg py-2 hover:bg-gray-100 transition">
-                    {{-- TODO: Tambahkan icon --}}
-                    <span class="text-sm font-medium"><a href="{{ route('home') }}">Lanjutkan tanpa akun</a></span>
-                </button>
-                <span class="text-sm font-medium">{{ ('Sudah memiliki akun?') }}</span>
-                <a href="{{ route('login') }}" class="text-sm font-medium text-blue-500"
-                    wire:navigate>{{ ('Masuk') }}</a>
+            <div class="space-y-3 text-center">
+                <a href="{{ route('home') }}"
+                    class="w-full flex items-center justify-center gap-2 border border-slate-200 rounded-lg py-2 hover:bg-slate-50 transition text-sm font-medium">
+                    <i class="fa-solid fa-car"></i>
+                    Lanjutkan tanpa akun
+                </a>
+                <p class="text-sm text-slate-600">
+                    Sudah punya akun?
+                    <a href="{{ route('login') }}" class="font-medium text-primary hover:underline">Masuk</a>
+                </p>
             </div>
-
         </div>
     </div>
 </x-layouts.auth>

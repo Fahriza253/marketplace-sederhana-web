@@ -34,7 +34,7 @@ class Product extends Model
         'sold_at' => 'datetime',
     ];
 
-    public function seller(): BelongsTo 
+    public function seller(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -59,14 +59,14 @@ class Product extends Model
         return $this->hasOne(Image::class)->where('is_primary', true);
     }
 
-    public function scopeAvailable(Builder $query) 
+    public function scopeAvailable(Builder $query)
     {
         return $query->where('status', 'available');
     }
 
     public function scopeNewest(Builder $query)
     {
-        return $query->newest();
+        return $query->latest();
     }
 
     public function scopeBasicRelations(Builder $query)

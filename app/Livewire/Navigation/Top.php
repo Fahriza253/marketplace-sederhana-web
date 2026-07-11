@@ -59,24 +59,42 @@ class Top extends Component
             ],
             'products.show' => [
                 [
-                    'label' => 'Produk',
-                    'url' => 'products.index',
-                    'roles' => ['admin', 'seller', 'consument'],
+                    'label' => 'Katalog',
+                    'url' => 'home',
+                    'roles' => null,
                 ],
                 [
                     'label' => $params['product']->name ?? 'Detail Produk',
                     'url' => null,
-                    'roles' => ['admin', 'seller', 'consument'],
+                    'roles' => null,
                 ],
             ],
             'search' => [
                 [
                     'label' => 'Pencarian',
                     'url' => null,
-                    'roles' => ['admin', 'seller', 'consument'],
+                    'roles' => null,
                 ],
             ],
-            // Tambahkan lainnya di sini
+            'dashboard' => [
+                [
+                    'label' => 'Dashboard',
+                    'url' => null,
+                    'roles' => ['admin', 'seller'],
+                ],
+            ],
+            'dashboard.finance' => [
+                [
+                    'label' => 'Dashboard',
+                    'url' => 'dashboard',
+                    'roles' => ['admin', 'seller'],
+                ],
+                [
+                    'label' => 'Finance',
+                    'url' => null,
+                    'roles' => ['admin', 'seller'],
+                ],
+            ],
         ];
 
         // Tidak tampilkan breadcrumbs di halaman Home
@@ -96,7 +114,10 @@ class Top extends Component
         if (isset($map[$routeName])) {
             foreach ($map[$routeName] as $item) {
                 // Jika roles di-set, cek apakah user memiliki salah satu role
-                if (!isset($item['roles']) || ($user && $user->hasRole($item['roles']))) {
+                $roles = $item['roles'] ?? null;
+                $allowed = $roles === null || ($user && $user->hasRole($roles));
+
+                if ($allowed) {
                     $breadcrumbs[] = [
                         'label' => $item['label'],
                         'url' => $item['url'] ? route($item['url']) : null,
